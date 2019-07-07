@@ -4,7 +4,7 @@ enum Terrain {
 
   Normal,
 
-  // Water prevents units from taking actions.
+  // Water kills normal units, and prevents massive units from attacking.
   Water,
 
   // Lava is like water, but also sets units on fire.

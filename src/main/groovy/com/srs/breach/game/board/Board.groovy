@@ -62,6 +62,7 @@ class Board {
 
   private set(int x, int y, Tile tile) {
     tiles[index(x, y)] = tile
+    tile.entity?.setLocation(x, y)
   }
 
   private int index(int x, int y) {

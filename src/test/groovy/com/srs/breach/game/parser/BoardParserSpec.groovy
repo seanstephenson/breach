@@ -13,8 +13,6 @@ class BoardParserSpec extends Specification {
   def 'Terrain is parsed'() {
     when:
     def board = parser.parse('''
-      entities
-      
       * . .
       . . _
     ''')
@@ -28,8 +26,6 @@ class BoardParserSpec extends Specification {
   def 'Effects are parsed'() {
     when:
     def board = parser.parse('''
-      entities
-      
       . *a  f
       .  s  .
     ''')
@@ -51,8 +47,6 @@ class BoardParserSpec extends Specification {
   def 'Buildings are parsed'() {
     when:
     def board = parser.parse('''
-      entities
-      
       . *Bf .
       B  b  .
     ''')
@@ -73,8 +67,6 @@ class BoardParserSpec extends Specification {
   def 'Mountains are parsed'() {
     when:
     def board = parser.parse('''
-      entities
-      
       . *Mf .
       m  M  .
     ''')
@@ -92,11 +84,27 @@ class BoardParserSpec extends Specification {
     !(board.get(1, 0).entity as Mountain).damaged
   }
 
+  def 'Spawn points are parsed'() {
+    when:
+    def board = parser.parse('''
+      ^  .
+      . ^!
+    ''')
+
+    then:
+    board.get(0, 1).terrain == Terrain.Normal
+    board.get(0, 1).spawnPoint
+
+    board.get(1, 0).terrain == Terrain.Forest
+    board.get(1, 0).spawnPoint
+
+    !board.get(0, 0).spawnPoint
+    !board.get(1, 1).spawnPoint
+  }
+
   def 'Invalid - multiple terrain markers'() {
     when:
     parser.parse('''
-      entities
-      
       . . ._
     ''')
 

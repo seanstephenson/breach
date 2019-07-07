@@ -9,10 +9,13 @@ class Weapon {
   boolean secondModPowered
 
   enum Type {
-    // todo: fill these in
+
     TitanFist,
-    Shot,
-    Artillery
+    TaurusCannon,
+    ArtemisArtillery,
+
+    // todo: fill these in...
+
   }
 
 }

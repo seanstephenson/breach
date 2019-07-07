@@ -1,7 +1,22 @@
 package com.srs.breach.game.entity
 
-class Mountain implements Entity {
+class Mountain extends AbstractEntity {
 
-  boolean damaged
+  Mountain() {
+    this.health = 2
+    this.maxHealth = 2
+  }
+
+  boolean isDamaged() {
+    this.health == 1
+  }
+
+  static Mountain create() {
+    new Mountain()
+  }
+
+  static Mountain createDamaged() {
+    new Mountain(health: 1)
+  }
 
 }

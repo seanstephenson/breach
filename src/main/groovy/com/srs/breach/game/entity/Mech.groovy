@@ -3,33 +3,52 @@ package com.srs.breach.game.entity
 import com.srs.breach.game.Pilot
 import com.srs.breach.game.Weapon
 
-class Mech implements Entity {
+import static com.srs.breach.game.entity.Entity.*
+import static com.srs.breach.game.entity.Entity.Ability.*
+
+class Mech extends AbstractEntity {
 
   Type type
   Pilot pilot
+  Equipment equipment
 
-  int availablePower
-  int bonusPower
-  int usedPower
-  int totalPower
+  static class Equipment {
 
-  boolean healthUpgrade
-  boolean moveUpgrade
+    boolean healthUpgrade
+    boolean moveUpgrade
 
-  Weapon firstWeapon
-  Weapon secondWeapon
+    Weapon firstWeapon
+    Weapon secondWeapon
+
+  }
 
   enum Type {
 
     // Rift Walkers
-    CombatMech,
-    CannonMech,
-    ArtilleryMech,
+    CombatMech(3, 3),
+    CannonMech(3, 3),
+    ArtilleryMech(2, 3),
 
     // Rusting Hulks
-    JetMech,
-    RocketMech,
-    PulseMech,
+    JetMech(2, 4, Flying),
+    RocketMech(3, 3),
+    PulseMech(3, 4),
+
+    // todo: fill these in...
+    ;
+
+    int health
+    int move
+    List<Ability> abilities
+
+    Type() {
+    }
+
+    Type(int health, int move, Ability... abilities) {
+      this.health = health
+      this.move = move
+      this.abilities = abilities.toList() + Massive  // all mech are massive
+    }
 
   }
 
