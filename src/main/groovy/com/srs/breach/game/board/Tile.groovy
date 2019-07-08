@@ -18,4 +18,15 @@ class Tile {
     Smoke
   }
 
+  Tile() {
+  }
+
+  Tile(Entity entity) {
+    this.entity = entity
+  }
+
+  Tile(Terrain terrain) {
+    this.terrain = terrain
+  }
+
 }

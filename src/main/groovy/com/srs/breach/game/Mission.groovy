@@ -1,8 +1,10 @@
 package com.srs.breach.game
 
+import com.srs.breach.game.board.Board
+
 class Mission {
 
-  Region region
+  Board board
 
   List<ObjectiveStatus> objectiveStatuses
   int remainingTurns

@@ -11,6 +11,9 @@ class Island {
   }
 
   Type type
+
   List<Region> regions
+
+  boolean secure
 
 }

@@ -4,6 +4,14 @@ enum Terrain {
 
   Normal,
 
+  // Mountains are obstacles that act as both entities and terrain.
+  Mountain,
+  MountainDamaged,
+
+  // Buildings are objectives that have to be defended.
+  BuildingDouble,
+  BuildingSingle,
+
   // Water kills normal units, and prevents massive units from attacking.
   Water,
 
