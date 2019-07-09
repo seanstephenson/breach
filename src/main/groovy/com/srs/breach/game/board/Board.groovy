@@ -60,9 +60,17 @@ class Board {
     tiles[index(x, y)]
   }
 
+  Tile get(Point location) {
+    get(location.x, location.y)
+  }
+
   void set(int x, int y, Tile tile) {
     tiles[index(x, y)] = tile
-    tile.entity?.setLocation(x, y)
+    tile.entity?.setLocation(new Point(x, y))
+  }
+
+  void set(Point location, Tile tile) {
+    set(location.x, location.y, tile)
   }
 
   private int index(int x, int y) {

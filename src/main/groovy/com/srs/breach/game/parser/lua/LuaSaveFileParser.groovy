@@ -5,13 +5,13 @@ import com.srs.breach.game.Mission
 import com.srs.breach.game.Pilot
 import com.srs.breach.game.Weapon
 import com.srs.breach.game.board.Board
+import com.srs.breach.game.board.Point
 import com.srs.breach.game.board.Terrain
 import com.srs.breach.game.board.Tile
 import com.srs.breach.game.entity.Building
 import com.srs.breach.game.entity.Enemy
 import com.srs.breach.game.entity.Mech
 import com.srs.breach.game.entity.Mountain
-import groovy.transform.Immutable
 import org.luaj.vm2.Globals
 import org.luaj.vm2.LuaTable
 import org.luaj.vm2.LuaValue
@@ -60,8 +60,8 @@ class LuaSaveFileParser {
     def enemies = parseEnemies(activeRegion)
     def board = parseBoard(activeRegion)
 
-    mechs.each { mech -> board.get(mech.x, mech.y).entity = mech }
-    enemies.each { enemy -> board.get(enemy.x, enemy.y).entity = enemy }
+    mechs.each { mech -> board.get(mech.location).entity = mech }
+    enemies.each { enemy -> board.get(enemy.location).entity = enemy }
 
     new Game(
       mechs: mechs,
@@ -97,24 +97,28 @@ class LuaSaveFileParser {
   private Mech parseMech(LuaTable mech) {
 
     def location = parsePoint(mech.get('location'))
+    def health = mech.get('health').checkint()
+    def healthMax = mech.get('max_health').checkint()
 
     def type = parseMechType(mech.get('type').checkjstring())
     def pilot = parsePilot(mech.get('pilot').checktable())
-    def equipment = parseEquipment(mech)
-
     def order = mech.get('id').checkint()
 
+    def equipment = parseEquipment(mech)
+
     new Mech(
-      x: location.x,
-      y: location.y,
+      location: location,
+      health: health,
+      healthMax: healthMax,
       type: type,
       pilot: pilot,
-      equipment: equipment,
-      order: order
+      order: order,
+      equipment: equipment
     )
   }
 
   private Mech.Type parseMechType(String type) {
+
     switch (type) {
       case 'PunchMech': return Mech.Type.CombatMech
       case 'TankMech': return Mech.Type.CannonMech
@@ -141,6 +145,7 @@ class LuaSaveFileParser {
   }
 
   private Pilot.Type parsePilotType(String type) {
+
     switch (type) {
       case 'Pilot_Original': return Pilot.Type.RalphKarlsen
 
@@ -202,7 +207,50 @@ class LuaSaveFileParser {
   }
 
   private List<Enemy> parseEnemies(LuaTable region) {
-    []
+
+    def enemyTeamId = 6
+
+    def pawns = findPawns(region)
+    def enemies = pawns.findAll { pawn ->
+      !pawn.get('mech').checkboolean() &&
+        pawn.get('iTeamId').checkint() == enemyTeamId
+    }
+
+    def order = 0
+    enemies.collect { enemy ->
+      parseEnemy(enemy, order++)
+    }
+  }
+
+  private Enemy parseEnemy(LuaTable enemy, int order) {
+
+    def location = parsePoint(enemy.get('location'))
+    def target = parsePoint(enemy.get('piTarget'))
+    def health = enemy.get('health').checkint()
+    def healthMax = enemy.get('max_health').checkint()
+
+    def type = parseEnemyType(enemy.get('type').checkjstring())
+
+    new Enemy(
+      location: location,
+      health: health,
+      healthMax: healthMax,
+      type: type,
+      order: order,
+      target: target
+    )
+  }
+
+  private Enemy.Type parseEnemyType(String type) {
+
+    switch (type) {
+      case 'Scorpion1': return Enemy.Type.Scorpion
+      case 'Firefly1': return Enemy.Type.Firefly
+      case 'Hornet1': return Enemy.Type.Hornet
+      case 'Jelly_Health1': return Enemy.Type.SoldierPsion
+
+      default: throw new IllegalArgumentException("Unknown enemy type [$type]")
+    }
   }
 
   private List<LuaTable> findPawns(LuaTable region) {
@@ -288,11 +336,6 @@ class LuaSaveFileParser {
     (1..varargs.narg()).collect { i ->
       varargs.arg(i)
     }
-  }
-
-  @Immutable
-  private static class Point {
-    int x, y
   }
 
 }

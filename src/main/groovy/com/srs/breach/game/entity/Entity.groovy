@@ -1,11 +1,11 @@
 package com.srs.breach.game.entity
 
+import com.srs.breach.game.board.Point
+
 interface Entity {
 
-  int getX()
-  int getY()
-
-  void setLocation(int x, int y)
+  Point getLocation()
+  void setLocation(Point location)
 
   int getHealth()
   void setHealth(int health)
@@ -30,6 +30,8 @@ interface Entity {
     Massive,
     Armored,
     Flying,
+    Leaping,
+    Burrowing,
     Stable
   }
 
