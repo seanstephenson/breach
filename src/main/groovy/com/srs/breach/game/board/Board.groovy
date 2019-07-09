@@ -60,7 +60,7 @@ class Board {
     tiles[index(x, y)]
   }
 
-  private set(int x, int y, Tile tile) {
+  void set(int x, int y, Tile tile) {
     tiles[index(x, y)] = tile
     tile.entity?.setLocation(x, y)
   }

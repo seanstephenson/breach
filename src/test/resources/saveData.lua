@@ -1363,8 +1363,8 @@ GAME = {
 }
 
 SquadData = {
-  ["money"] = 0,
-  ["cores"] = 0,
+  ["money"] = 1,
+  ["cores"] = 2,
   ["bIsFavor"] = false,
   ["repairs"] = 0,
   ["CorpReward"] = {

@@ -3,13 +3,10 @@ package com.srs.breach.game.entity
 abstract class AbstractEntity implements Entity {
 
   int x, y
-  int health, maxHealth
+  int health, healthMax
 
   Effect effect
   List<Ability> abilities
-
-  AbstractEntity() {
-  }
 
   @Override
   void setLocation(int x, int y) {

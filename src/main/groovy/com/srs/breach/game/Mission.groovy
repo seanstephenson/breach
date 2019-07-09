@@ -1,18 +1,14 @@
 package com.srs.breach.game
 
 import com.srs.breach.game.board.Board
+import com.srs.breach.game.entity.Enemy
 
 class Mission {
 
   Board board
 
-  List<ObjectiveStatus> objectiveStatuses
   int remainingTurns
 
-  class ObjectiveStatus {
-    Objective objective
-    int completed
-    int required
-  }
+  List<Enemy> enemies
 
 }

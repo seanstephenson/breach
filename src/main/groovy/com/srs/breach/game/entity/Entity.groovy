@@ -10,8 +10,8 @@ interface Entity {
   int getHealth()
   void setHealth(int health)
 
-  int getMaxHealth()
-  void setMaxHealth(int maxHealth)
+  int getHealthMax()
+  void setHealthMax(int maxHealth)
 
   Effect getEffect()
   List<Ability> getAbilities()

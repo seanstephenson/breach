@@ -1,14 +1,23 @@
 package com.srs.breach.game.entity
 
-class Mountain extends AbstractEntity {
+import com.srs.breach.game.board.Terrain
+
+class Mountain extends TerrainEntity {
 
   Mountain() {
     this.health = 2
-    this.maxHealth = 2
+    this.healthMax = 2
   }
 
   boolean isDamaged() {
     this.health == 1
+  }
+
+  @Override
+  Terrain getTerrain() {
+    isDamaged() ?
+      Terrain.MountainDamaged :
+      Terrain.Mountain
   }
 
   static Mountain create() {
