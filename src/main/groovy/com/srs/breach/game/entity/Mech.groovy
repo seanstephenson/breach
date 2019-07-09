@@ -11,14 +11,15 @@ class Mech extends AbstractEntity {
   Type type
   Pilot pilot
   Equipment equipment
+  int order
 
   static class Equipment {
 
     boolean healthUpgrade
     boolean moveUpgrade
 
-    Weapon firstWeapon
-    Weapon secondWeapon
+    Weapon primaryWeapon
+    Weapon secondaryWeapon
 
   }
 

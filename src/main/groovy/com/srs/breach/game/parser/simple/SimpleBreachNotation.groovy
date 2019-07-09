@@ -1,6 +1,9 @@
 package com.srs.breach.game.parser.simple
 
 import com.srs.breach.game.board.Terrain
+import com.srs.breach.game.entity.Enemy
+import com.srs.breach.game.entity.Entity
+import com.srs.breach.game.entity.Mech
 
 import static com.srs.breach.game.board.Terrain.*
 import static com.srs.breach.game.board.Tile.*
@@ -57,6 +60,16 @@ class SimpleBreachNotation {
 
   static String toSymbol(Effect effect) {
     EFFECT_TO_SYMBOL[effect]
+  }
+
+  static String toSymbol(Entity entity) {
+    if (entity instanceof Mech) {
+      (('X' as char) + entity.order) as char
+    } else if (entity instanceof Enemy) {
+      (entity.order + 1).toString()
+    } else {
+      null
+    }
   }
 
   private static <K, V> Map<V, K> inverse(Map<K, V> map) {

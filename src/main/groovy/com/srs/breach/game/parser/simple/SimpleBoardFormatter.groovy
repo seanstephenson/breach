@@ -55,13 +55,13 @@ class SimpleBoardFormatter {
 
     def spawnPoint = tile.spawnPoint ? spawnPointSymbol() : ''
 
-    if (tile.terrain == Terrain.Normal && (effect || spawnPoint)) {
+    def entity = toSymbol(tile.entity) ?: ''
+
+    if (tile.terrain == Terrain.Normal && (effect || spawnPoint || entity)) {
       terrain = ''
     }
 
-    // todo: entities
-
-    "${terrain}${effect}${spawnPoint}"
+    "${entity}${terrain}${effect}${spawnPoint}"
   }
 
 }
