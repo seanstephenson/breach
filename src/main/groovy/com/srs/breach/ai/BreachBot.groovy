@@ -13,11 +13,12 @@ class BreachBot {
     def userHome = Paths.get(System.getProperty('user.home'))
     def profile = userHome.resolve('Library/Application Support/IntoTheBreach/profile_Alpha')
 
-    def saveFile = profile.resolve('saveFile.lua')
+    def saveFile = profile.resolve('saveData.lua')
 
     def game = new LuaSaveFileParser().parse(saveFile.toFile().text)
 
     println new SimpleBoardFormatter().format(game.mission.board)
+
   }
 
 

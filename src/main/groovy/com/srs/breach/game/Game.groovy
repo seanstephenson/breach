@@ -7,7 +7,4 @@ class Game {
   int reputation
   int cores
 
-  List<Pilot> storedPilots
-  List<Weapon.Type> storedWeapons
-
 }
