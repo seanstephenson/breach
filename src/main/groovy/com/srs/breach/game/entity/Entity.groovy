@@ -7,6 +7,8 @@ interface Entity {
   Point getLocation()
   void setLocation(Point location)
 
+  List<Point> getExtraLocations()
+
   int getHealth()
   void setHealth(int health)
 

@@ -11,8 +11,8 @@ abstract class AbstractEntity implements Entity {
   List<Ability> abilities
 
   @Override
-  void setLocation(Point point) {
-    this.location = point
+  List<Point> getExtraLocations() {
+    []
   }
 
 }

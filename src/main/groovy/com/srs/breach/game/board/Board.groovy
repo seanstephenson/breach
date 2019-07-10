@@ -1,5 +1,7 @@
 package com.srs.breach.game.board
 
+import com.srs.breach.game.entity.Entity
+
 /**
  * A game board, represented as a grid of tiles.
  *
@@ -71,6 +73,15 @@ class Board {
 
   void set(Point location, Tile tile) {
     set(location.x, location.y, tile)
+  }
+
+  void place(List<Entity> entities) {
+    entities.each { entity ->
+      def locations = [entity.location] + entity.extraLocations
+      locations.each { location ->
+        get(location).entity = entity
+      }
+    }
   }
 
   private int index(int x, int y) {

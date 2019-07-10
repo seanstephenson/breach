@@ -5,7 +5,7 @@ import com.srs.breach.game.board.Point
 import static com.srs.breach.game.entity.Entity.*
 import static com.srs.breach.game.entity.Entity.Ability.*
 
-class Enemy extends AbstractEntity {
+class Enemy extends ActionEntity {
 
   Type type
   int order

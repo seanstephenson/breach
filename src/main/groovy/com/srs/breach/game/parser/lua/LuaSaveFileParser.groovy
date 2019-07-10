@@ -12,6 +12,7 @@ import com.srs.breach.game.entity.Building
 import com.srs.breach.game.entity.Enemy
 import com.srs.breach.game.entity.Mech
 import com.srs.breach.game.entity.Mountain
+import com.srs.breach.game.entity.Npc
 import org.luaj.vm2.Globals
 import org.luaj.vm2.LuaTable
 import org.luaj.vm2.LuaValue
@@ -58,10 +59,12 @@ class LuaSaveFileParser {
 
     def mechs = parseMechs(activeRegion)
     def enemies = parseEnemies(activeRegion)
+    def npcs = parseNpcs(activeRegion)
     def board = parseBoard(activeRegion)
 
-    mechs.each { mech -> board.get(mech.location).entity = mech }
-    enemies.each { enemy -> board.get(enemy.location).entity = enemy }
+    board.place(mechs)
+    board.place(enemies)
+    board.place(npcs)
 
     new Game(
       mechs: mechs,
@@ -71,7 +74,8 @@ class LuaSaveFileParser {
       cores: cores,
       mission: new Mission(
         board: board,
-        enemies: enemies
+        enemies: enemies,
+        npcs: npcs
       )
     )
   }
@@ -250,6 +254,49 @@ class LuaSaveFileParser {
       case 'Jelly_Health1': return Enemy.Type.SoldierPsion
 
       default: throw new IllegalArgumentException("Unknown enemy type [$type]")
+    }
+  }
+
+  private List<Npc> parseNpcs(LuaTable region) {
+
+    def enemyTeamId = 6
+
+    def pawns = findPawns(region)
+    def npcs = pawns.findAll { pawn ->
+      !pawn.get('mech').checkboolean() &&
+        pawn.get('iTeamId').checkint() != enemyTeamId
+    }
+
+    def order = 0
+    npcs.collect { npc ->
+      parseNpc(npc, order++)
+    }
+  }
+
+  private Npc parseNpc(LuaTable npc, int order) {
+
+    def location = parsePoint(npc.get('location'))
+    def health = npc.get('health').checkint()
+    def healthMax = npc.get('max_health').checkint()
+
+    def type = parseNpcType(npc.get('type').checkjstring())
+
+    new Npc(
+      location: location,
+      health: health,
+      healthMax: healthMax,
+      type: type,
+      order: order
+    )
+  }
+
+  private Npc.Type parseNpcType(String type) {
+
+    switch (type) {
+      case 'Train_Pawn': return Npc.Type.Train
+      case 'Dam_Pawn': return Npc.Type.Dam
+
+      default: throw new IllegalArgumentException("Unknown npc type [$type]")
     }
   }
 

@@ -6,6 +6,7 @@ import com.srs.breach.game.board.Terrain
 import com.srs.breach.game.entity.Enemy
 import com.srs.breach.game.entity.Entity
 import com.srs.breach.game.entity.Mech
+import com.srs.breach.game.entity.Npc
 import com.srs.breach.game.entity.TerrainEntity
 
 import static com.srs.breach.game.board.Terrain.*
@@ -38,10 +39,17 @@ class SimpleBreachNotation {
   private static final EFFECT = [
     'f': Fire,
     'a': Acid,
-    's': Smoke,
+    's': Smoke
   ]
 
   private static final EFFECT_TO_SYMBOL = inverse(EFFECT)
+
+  private static final NPC = [
+    'T': Npc.Type.Train,
+    'D': Npc.Type.Dam
+  ]
+
+  private static final NPC_TO_SYMBOL = inverse(NPC)
 
   private static final String SPAWN_POINT_SYMBOL = '^'
 
@@ -84,6 +92,8 @@ class SimpleBreachNotation {
       (entity.order + 1).toString()
     } else if (entity instanceof TerrainEntity) {
       toSymbol(entity.terrain)
+    } else if (entity instanceof Npc) {
+      NPC_TO_SYMBOL[entity.type]
     } else {
       null
     }

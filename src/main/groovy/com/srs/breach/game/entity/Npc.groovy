@@ -1,38 +1,28 @@
 package com.srs.breach.game.entity
 
-import com.srs.breach.game.Pilot
-import com.srs.breach.game.Weapon
+import com.srs.breach.game.board.Point
 
 import static com.srs.breach.game.entity.Entity.*
 import static com.srs.breach.game.entity.Entity.Ability.*
 
-class Mech extends ActionEntity {
+class Npc extends ActionEntity {
 
   Type type
-  Pilot pilot
-  Equipment equipment
 
-  static class Equipment {
+  @Override
+  List<Point> getExtraLocations() {
+    switch (type) {
+      case Type.Train: return [location.south()]
+      case Type.Dam: return [location.east()]
 
-    boolean healthUpgrade
-    boolean moveUpgrade
-
-    Weapon primaryWeapon
-    Weapon secondaryWeapon
-
+      default: []
+    }
   }
 
   enum Type {
 
-    // Rift Walkers
-    CombatMech(3, 3),
-    CannonMech(3, 3),
-    ArtilleryMech(2, 3),
-
-    // Rusting Hulks
-    JetMech(2, 4, Flying),
-    RocketMech(3, 3),
-    PulseMech(3, 4),
+    Train,
+    Dam
 
     // todo: fill these in...
     ;
