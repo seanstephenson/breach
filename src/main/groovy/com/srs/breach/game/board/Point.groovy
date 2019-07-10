@@ -1,5 +1,8 @@
 package com.srs.breach.game.board
 
+import groovy.transform.EqualsAndHashCode
+
+@EqualsAndHashCode
 class Point {
 
   int x, y

@@ -1,9 +1,12 @@
 package com.srs.breach.game.parser.simple
 
+import com.srs.breach.game.Action
+import com.srs.breach.game.board.Board
 import com.srs.breach.game.board.Terrain
 import com.srs.breach.game.entity.Enemy
 import com.srs.breach.game.entity.Entity
 import com.srs.breach.game.entity.Mech
+import com.srs.breach.game.entity.TerrainEntity
 
 import static com.srs.breach.game.board.Terrain.*
 import static com.srs.breach.game.board.Tile.*
@@ -42,6 +45,18 @@ class SimpleBreachNotation {
 
   private static final String SPAWN_POINT_SYMBOL = '^'
 
+  static Board parseBoard(String text) {
+    new SimpleBoardParser().parse(text)
+  }
+
+  static String format(Board board) {
+    new SimpleBoardFormatter().format(board)
+  }
+
+  static String format(Action action) {
+    new SimpleActionFormatter().format(action)
+  }
+
   static String spawnPointSymbol() {
     SPAWN_POINT_SYMBOL
   }
@@ -67,6 +82,8 @@ class SimpleBreachNotation {
       (('X' as char) + entity.order) as char
     } else if (entity instanceof Enemy) {
       (entity.order + 1).toString()
+    } else if (entity instanceof TerrainEntity) {
+      toSymbol(entity.terrain)
     } else {
       null
     }
