@@ -18,6 +18,7 @@ interface Entity {
   Effect getEffect()
   List<Ability> getAbilities()
 
+  Team getTeam()
 
   enum Effect {
     Fire,
@@ -32,7 +33,6 @@ interface Entity {
     Massive,
     Armored,
     Flying,
-    Leaping,
     Burrowing,
     Stable
   }

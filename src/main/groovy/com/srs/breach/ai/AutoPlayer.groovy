@@ -1,6 +1,6 @@
 package com.srs.breach.ai
 
-import com.srs.breach.game.Action
+
 import com.srs.breach.game.Game
 
 class AutoPlayer {

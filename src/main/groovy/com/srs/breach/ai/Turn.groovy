@@ -1,4 +1,4 @@
-package com.srs.breach.game
+package com.srs.breach.ai
 
 class Turn {
 

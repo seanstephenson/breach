@@ -9,7 +9,6 @@ class LuaSpec extends Specification {
   def globals = JsePlatform.standardGlobals()
 
   def 'Run Luaj program'() {
-    setup:
     def out = new ByteArrayOutputStream()
     globals.STDOUT = new PrintStream(out)
 

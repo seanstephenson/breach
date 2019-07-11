@@ -8,7 +8,6 @@ class SimpleBoardFormatterSpec extends Specification {
   def formatter = new SimpleBoardFormatter()
 
   def 'Board is formatted correctly'() {
-    setup:
     def text = normalize('''
       .  Mf .
       m  M  ^

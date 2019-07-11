@@ -1,6 +1,6 @@
 package com.srs.breach.game.parser.simple
 
-import com.srs.breach.game.Action
+import com.srs.breach.ai.Action
 import com.srs.breach.game.board.Board
 import com.srs.breach.game.board.Terrain
 import com.srs.breach.game.entity.Enemy

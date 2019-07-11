@@ -1,9 +1,9 @@
 package com.srs.breach.game.parser.simple
 
-import com.srs.breach.game.Action
+import com.srs.breach.ai.Action
 import com.srs.breach.game.board.Board
 
-import static com.srs.breach.game.Action.Type.*
+import static com.srs.breach.ai.Action.Type.*
 import static com.srs.breach.game.parser.simple.SimpleBreachNotation.*
 
 class SimpleActionFormatter {

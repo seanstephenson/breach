@@ -6,11 +6,16 @@ import com.srs.breach.game.Weapon
 import static com.srs.breach.game.entity.Entity.*
 import static com.srs.breach.game.entity.Entity.Ability.*
 
-class Mech extends ActionEntity {
+class Mech extends Actor {
 
   Type type
   Pilot pilot
   Equipment equipment
+
+  @Override
+  Team getTeam() {
+    Team.Player
+  }
 
   static class Equipment {
 

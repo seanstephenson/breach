@@ -5,12 +5,17 @@ import com.srs.breach.game.board.Point
 import static com.srs.breach.game.entity.Entity.*
 import static com.srs.breach.game.entity.Entity.Ability.*
 
-class Enemy extends ActionEntity {
+class Enemy extends Actor {
 
   Type type
   int order
 
   Point target
+
+  @Override
+  Team getTeam() {
+    Team.Enemy
+  }
 
   enum Type {
 
@@ -27,8 +32,8 @@ class Enemy extends ActionEntity {
     AlphaFirefly(5, 2),
     FireflyLeader(6, 3, Massive),
 
-    Leaper(1, 4, Leaping),
-    AlphaLeaper(3, 4, Leaping),
+    Leaper(1, 4),
+    AlphaLeaper(3, 4),
 
     Beetle(4, 2),
     AlphaBeetle(5, 2),

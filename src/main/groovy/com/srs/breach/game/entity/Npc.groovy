@@ -4,16 +4,18 @@ import com.srs.breach.game.board.Point
 
 import static com.srs.breach.game.entity.Entity.*
 import static com.srs.breach.game.entity.Entity.Ability.*
+import static com.srs.breach.game.entity.Npc.Type.*
 
-class Npc extends ActionEntity {
+class Npc extends Actor {
 
   Type type
+  Team team = Team.Neutral
 
   @Override
   List<Point> getExtraLocations() {
     switch (type) {
-      case Type.Train: return [location.south()]
-      case Type.Dam: return [location.east()]
+      case Train: return [location.south()]
+      case Dam: return [location.east()]
 
       default: []
     }

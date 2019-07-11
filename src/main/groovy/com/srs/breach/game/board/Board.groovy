@@ -75,6 +75,10 @@ class Board {
     set(location.x, location.y, tile)
   }
 
+  void place(Entity entity) {
+    place([entity])
+  }
+
   void place(List<Entity> entities) {
     entities.each { entity ->
       def locations = [entity.location] + entity.extraLocations

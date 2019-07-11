@@ -6,4 +6,9 @@ abstract class TerrainEntity extends AbstractEntity {
 
   abstract Terrain getTerrain()
 
+  @Override
+  Team getTeam() {
+    Team.Terrain
+  }
+
 }

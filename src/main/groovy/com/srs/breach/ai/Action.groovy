@@ -1,4 +1,4 @@
-package com.srs.breach.game
+package com.srs.breach.ai
 
 import com.srs.breach.game.board.Point
 import com.srs.breach.game.entity.Mech
