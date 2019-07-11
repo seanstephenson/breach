@@ -3,7 +3,9 @@ package com.srs.breach.ai
 import com.srs.breach.game.board.Board
 import com.srs.breach.game.board.Point
 import com.srs.breach.game.entity.AbstractEntity
+import com.srs.breach.game.entity.Enemy
 import com.srs.breach.game.entity.Mobile
+import com.srs.breach.game.entity.Mountain
 import com.srs.breach.game.entity.Team
 import spock.lang.Specification
 
@@ -15,7 +17,7 @@ class MoveFinderSpec extends Specification {
     int moveSpeed
     boolean canMove = true
     boolean flying
-    Team team = Team.Neutral
+    Team team = Team.Player
 
     @Override
     boolean canMove() {
@@ -116,6 +118,78 @@ class MoveFinderSpec extends Specification {
       . . . . . . . .
       . . . . . . . .
       . . . . . . . .
+      . . . . . . . .
+    ''')
+  }
+
+  def 'Obstacles - not flying'() {
+
+    mover.moveSpeed = 3
+    board.place(new Mountain(location: mover.location.west()))
+    board.place(new Mountain(location: mover.location.east().east()))
+    board.place(new Mountain(location: mover.location.north().east()))
+    board.place(new Enemy(location: mover.location.north().north().north()))
+
+    /*
+      . . . 1 . . . .
+      . . . X X . . .
+      . X X X M . . .
+      . . M ? X M . .
+      . X X X X X . .
+      . . X X X . . .
+      . . . X . . . .
+      . . . . . . . .
+    */
+
+    when:
+    def moves = moveFinder.find(mover, board)
+
+    then:
+    moves == BitBoard.from('''
+      . . . . . . . .
+      . . X X X . . .
+      . X X X . . . .
+      . . . . X . . .
+      . X X X X X . .
+      . . X X X . . .
+      . . . X . . . .
+      . . . . . . . .
+    ''')
+  }
+
+  def 'Obstacles - flying'() {
+
+    mover.moveSpeed = 3
+    mover.flying = true
+
+    board.place(new Mountain(location: mover.location.west()))
+    board.place(new Mountain(location: mover.location.east().east()))
+    board.place(new Mountain(location: mover.location.north().east()))
+    board.place(new Enemy(location: mover.location.north().north().north()))
+
+    /*
+      . . . 1 . . . .
+      . . X X X . . .
+      . X X X M X . .
+      X X M ? X M X .
+      . X X X X X . .
+      . . X X X . . .
+      . . . X . . . .
+      . . . . . . . .
+    */
+
+    when:
+    def moves = moveFinder.find(mover, board)
+
+    then:
+    moves == BitBoard.from('''
+      . . . . . . . .
+      . . X X X . . .
+      . X X X . X . .
+      X X . . X . X .
+      . X X X X X . .
+      . . X X X . . .
+      . . . X . . . .
       . . . . . . . .
     ''')
   }

@@ -16,8 +16,16 @@ class BitBoard {
     this.bits = bits
   }
 
+  boolean get(Point point) {
+    get(point.x, point.y)
+  }
+
   boolean get(int x, int y) {
     (bits & mask(x, y)) != 0
+  }
+
+  void set(Point point, boolean value) {
+    set(point.x, point.y, value)
   }
 
   void set(int x, int y, boolean value) {

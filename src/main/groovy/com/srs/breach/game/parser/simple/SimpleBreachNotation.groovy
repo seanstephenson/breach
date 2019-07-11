@@ -95,7 +95,7 @@ class SimpleBreachNotation {
     } else if (entity instanceof Npc) {
       NPC_TO_SYMBOL[entity.type]
     } else {
-      null
+      '?'
     }
   }
 

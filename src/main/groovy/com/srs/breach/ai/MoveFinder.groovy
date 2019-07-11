@@ -1,6 +1,7 @@
 package com.srs.breach.ai
 
 import com.srs.breach.game.board.Board
+import com.srs.breach.game.board.Point
 import com.srs.breach.game.entity.Mobile
 
 /**
@@ -20,11 +21,35 @@ class MoveFinder {
     def speed = mover.moveSpeed
 
     def occupied = findOccupied(board)
-    def blocked = findBlocked(board, mover)
 
-    def mask = manhattanMask(speed).shift(origin.x - speed, origin.y - speed)
+    if (mover.flying) {
+      def mask = manhattanMask(speed).shift(origin.x - speed, origin.y - speed)
+      moves = mask - occupied
 
-    mask - occupied - blocked
+    } else {
+      def blocked = findBlocked(board, mover)
+      depthFirstSearch(origin, moves, blocked, speed)
+      moves = moves - occupied
+    }
+
+    moves
+  }
+
+  private void depthFirstSearch(Point origin, BitBoard moves, BitBoard blocked, int distance) {
+
+    moves.set(origin, true)
+
+    if (distance > 0) {
+      for (next in [origin.west(), origin.north(), origin.east(), origin.south()]) {
+        if (inBounds(next) && !blocked.get(next)) {
+          depthFirstSearch(next, moves, blocked, distance - 1)
+        }
+      }
+    }
+  }
+
+  private boolean inBounds(Point point) {
+    point.x >= 0 && point.x < 8 && point.y >= 0 && point.y < 8
   }
 
   private BitBoard findBlocked(Board board, Mobile mover) {
