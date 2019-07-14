@@ -94,7 +94,7 @@ class SimpleBreachNotation {
       toSymbol(entity.terrain)
     } else if (entity instanceof Npc) {
       NPC_TO_SYMBOL[entity.type]
-    } else {
+    } else if (entity != null) {
       '?'
     }
   }
