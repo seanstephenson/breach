@@ -25,12 +25,26 @@ class LuaSaveFileParser {
 
   Game parse(String text) {
 
+    def globals = execute(text)
+    parseGame(globals)
+  }
+
+  Map<String, Object> toMap(String text) {
+
+    def globals = execute(text)
+
+    ['GameData', 'RegionData', 'SquadData', 'GAME'].collectEntries({ key ->
+      [key, LuaUtil.toJava(globals.get(key).checktable())]
+    })
+  }
+
+  private Globals execute(String text) {
     def globals = createGlobals()
 
     def chunk = globals.load(text)
     chunk.call()
 
-    parseGame(globals)
+    globals
   }
 
   private Globals createGlobals() {
