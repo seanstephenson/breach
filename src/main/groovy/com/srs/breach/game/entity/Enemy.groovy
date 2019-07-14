@@ -2,10 +2,9 @@ package com.srs.breach.game.entity
 
 import com.srs.breach.game.board.Point
 
-import static com.srs.breach.game.entity.Entity.*
 import static com.srs.breach.game.entity.Entity.Ability.*
 
-class Enemy extends Actor {
+class Enemy extends AbstractEntity implements Actor {
 
   Type type
   int order

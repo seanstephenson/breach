@@ -3,10 +3,9 @@ package com.srs.breach.game.entity
 import com.srs.breach.game.Pilot
 import com.srs.breach.game.Weapon
 
-import static com.srs.breach.game.entity.Entity.*
 import static com.srs.breach.game.entity.Entity.Ability.*
 
-class Mech extends Actor {
+class Mech extends AbstractEntity implements Actor {
 
   Type type
   Pilot pilot

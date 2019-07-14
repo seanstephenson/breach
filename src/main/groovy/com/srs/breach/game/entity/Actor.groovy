@@ -1,13 +1,12 @@
 package com.srs.breach.game.entity
 
-abstract class Actor extends AbstractEntity {
+import com.srs.breach.game.Weapon
 
+trait Actor implements Entity, Mobile {
+
+  boolean canAct = true
   int order
 
-  interface Type {
-
-    int getMove()
-
-  }
+  List<Weapon> weapons = []
 
 }

@@ -13,7 +13,7 @@ class MoveFinder {
 
     def moves = BitBoard.empty()
 
-    if (!mover.canMove()) {
+    if (!mover.canMove) {
       return moves
     }
 
@@ -23,7 +23,7 @@ class MoveFinder {
     def occupied = findOccupied(board)
 
     if (mover.flying) {
-      def mask = manhattanMask(speed).shift(origin.x - speed, origin.y - speed)
+      def mask = BitBoard.distance(origin.x, origin.y, speed)
       moves = mask - occupied
 
     } else {
@@ -37,7 +37,7 @@ class MoveFinder {
 
   private void depthFirstSearch(Point origin, BitBoard moves, BitBoard blocked, int distance) {
 
-    moves.set(origin, true)
+    moves.set(origin)
 
     if (distance > 0) {
       for (next in [origin.west(), origin.north(), origin.east(), origin.south()]) {
@@ -61,7 +61,7 @@ class MoveFinder {
         def tile = board.get(x, y)
 
         if (tile.entity && tile.entity.team != mover.team) {
-          bitBoard.set(x, y, true)
+          bitBoard.set(x, y)
         }
       }
     }
@@ -78,27 +78,12 @@ class MoveFinder {
         def tile = board.get(x, y)
 
         if (tile.entity) {
-          bitBoard.set(x, y, true)
+          bitBoard.set(x, y)
         }
       }
     }
 
     bitBoard
-  }
-
-  private static BitBoard manhattanMask(int moveSpeed) {
-
-    def mask = new BitBoard()
-
-    for (int y = 0; y < 8; y++) {
-      for (int x = 0; x < 8; x++) {
-        if (Math.abs(moveSpeed - x) + Math.abs(moveSpeed - y) <= moveSpeed) {
-          mask.set(x, y, true)
-        }
-      }
-    }
-
-    mask
   }
 
 }

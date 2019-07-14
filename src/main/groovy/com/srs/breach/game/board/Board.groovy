@@ -28,6 +28,10 @@ class Board {
 
   private Tile[] tiles
 
+  Board() {
+    this(8, 8)
+  }
+
   Board(int width, int height) {
 
     this.width = width

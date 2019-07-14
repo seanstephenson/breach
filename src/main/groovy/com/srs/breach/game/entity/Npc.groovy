@@ -2,11 +2,10 @@ package com.srs.breach.game.entity
 
 import com.srs.breach.game.board.Point
 
-import static com.srs.breach.game.entity.Entity.*
 import static com.srs.breach.game.entity.Entity.Ability.*
 import static com.srs.breach.game.entity.Npc.Type.*
 
-class Npc extends Actor {
+class Npc extends AbstractEntity implements Actor {
 
   Type type
   Team team = Team.Neutral

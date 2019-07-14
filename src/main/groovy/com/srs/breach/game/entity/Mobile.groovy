@@ -1,16 +1,10 @@
 package com.srs.breach.game.entity
 
-import com.srs.breach.game.board.Point
+trait Mobile implements Entity {
 
-interface Mobile {
+  boolean canMove = true
+  int moveSpeed
 
-  Point getLocation()
-
-  int getMoveSpeed()
-
-  boolean isFlying()
-  boolean canMove()
-
-  Team getTeam()
+  boolean flying
 
 }

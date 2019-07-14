@@ -14,14 +14,11 @@ class MoveFinderSpec extends Specification {
   def moveFinder = new MoveFinder()
 
   static class Mover extends AbstractEntity implements Mobile {
-    int moveSpeed
-    boolean canMove = true
-    boolean flying
+
     Team team = Team.Player
 
-    @Override
-    boolean canMove() {
-      canMove
+    Mover() {
+      canMove = true
     }
   }
 

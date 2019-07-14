@@ -1,19 +1,19 @@
 package com.srs.breach.ai
 
+import com.srs.breach.game.Weapon
 import com.srs.breach.game.board.Point
-import com.srs.breach.game.entity.Mech
+import com.srs.breach.game.entity.Actor
 
 class Action {
 
-  Mech mech
+  Actor actor
   Type type
   Point target
+  Weapon weapon
 
   enum Type {
     Move,
-    Repair,
-    PrimaryWeapon,
-    SecondaryWeapon
+    Weapon
   }
 
 }
