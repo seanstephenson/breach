@@ -308,6 +308,7 @@ class LuaSaveFileParser {
 
     switch (type) {
       case 'Train_Pawn': return Npc.Type.Train
+      case 'Train_Damaged': return Npc.Type.TrainDamaged
       case 'Dam_Pawn': return Npc.Type.Dam
 
       default: throw new IllegalArgumentException("Unknown npc type [$type]")
@@ -353,11 +354,18 @@ class LuaSaveFileParser {
     player.get('map_data').checktable()
   }
 
-  private Tile parseTile(LuaTable tile) {
+  private Tile parseTile(LuaTable source) {
 
-    def value = tile.get('terrain').checkint()
+    def tile = parseTerrain(source)
+    tile.effect = parseTileEffect(source)
 
-    switch (value) {
+    tile
+  }
+
+  private Tile parseTerrain(LuaTable tile) {
+
+    def terrain = tile.get('terrain').checkint()
+    switch (terrain) {
       case 0: return new Tile(Terrain.Normal)
       case 1: return new Tile(parseBuilding(tile))
       case 2: return new Tile(Terrain.Normal)  // destroyed building
@@ -365,7 +373,15 @@ class LuaSaveFileParser {
       case 4: return new Tile(parseMountain(tile))
       case 6: return new Tile(Terrain.Forest)
 
-      default: throw new IllegalArgumentException("Unknown terrain [$value]")
+      default: throw new IllegalArgumentException("Unknown terrain [$terrain]")
+    }
+  }
+
+  private Tile.Effect parseTileEffect(LuaTable tile) {
+    if (tile.get('fire').isint()) {
+      Tile.Effect.Fire
+    } else {
+      Tile.Effect.None
     }
   }
 

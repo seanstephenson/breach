@@ -13,7 +13,10 @@ class Npc extends AbstractEntity implements Actor {
   @Override
   List<Point> getExtraLocations() {
     switch (type) {
-      case Train: return [location.south()]
+
+      case Train:
+      case TrainDamaged: return [location.south()]
+
       case Dam: return [location.east()]
 
       default: []
@@ -23,6 +26,7 @@ class Npc extends AbstractEntity implements Actor {
   enum Type {
 
     Train,
+    TrainDamaged,
     Dam
 
     // todo: fill these in...
