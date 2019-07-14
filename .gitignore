@@ -1,7 +1,9 @@
 .idea
 *.iml
 build
+out
 
+.gradle
 gradle
 gradlew
 gradlew.bat
