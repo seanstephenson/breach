@@ -15,4 +15,8 @@ abstract class AbstractEntity implements Entity {
     []
   }
 
+  @Override
+  String toString() {
+    getClass().simpleName + location
+  }
 }

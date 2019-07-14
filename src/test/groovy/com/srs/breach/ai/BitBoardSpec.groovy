@@ -1,5 +1,6 @@
 package com.srs.breach.ai
 
+import com.srs.breach.game.board.BitBoard
 import com.srs.breach.game.board.Point
 import spock.lang.Specification
 import spock.lang.Unroll

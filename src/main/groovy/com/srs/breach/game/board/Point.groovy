@@ -1,8 +1,5 @@
 package com.srs.breach.game.board
 
-import groovy.transform.EqualsAndHashCode
-
-@EqualsAndHashCode
 class Point {
 
   int x, y
@@ -26,6 +23,17 @@ class Point {
 
   Point west() {
     new Point(x - 1, y)
+  }
+
+  @Override
+  boolean equals(Object object) {
+    def other = (Point) object
+    x == other.x && y == other.y
+  }
+
+  @Override
+  int hashCode() {
+    Integer.hashCode(x * 8 + y)
   }
 
   @Override

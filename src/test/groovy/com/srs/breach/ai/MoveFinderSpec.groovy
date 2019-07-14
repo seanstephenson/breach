@@ -1,5 +1,6 @@
 package com.srs.breach.ai
 
+import com.srs.breach.game.board.BitBoard
 import com.srs.breach.game.board.Board
 import com.srs.breach.game.board.Point
 import com.srs.breach.game.entity.AbstractEntity
@@ -22,12 +23,8 @@ class MoveFinderSpec extends Specification {
     }
   }
 
-  def board = new Board(8, 8)
   def mover = new Mover(moveSpeed: 2, location: new Point(3, 3))
-
-  def setup() {
-    board.place(mover)
-  }
+  def board = new Board(mover)
 
   def 'canMove is false'() {
 
@@ -79,8 +76,7 @@ class MoveFinderSpec extends Specification {
 
   def 'No obstacles - partially out of bounds - southeast'() {
 
-    mover.location = new Point(6, 6)
-    board.place(mover)
+    board.move(mover, new Point(6, 6))
 
     when:
     def moves = moveFinder.find(mover, board)
@@ -100,8 +96,7 @@ class MoveFinderSpec extends Specification {
 
   def 'No obstacles - partially out of bounds - northwest'() {
 
-    mover.location = new Point(1, 1)
-    board.place(mover)
+    board.move(mover, new Point(1, 1))
 
     when:
     def moves = moveFinder.find(mover, board)

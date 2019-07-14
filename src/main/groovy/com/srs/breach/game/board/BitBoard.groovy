@@ -1,6 +1,4 @@
-package com.srs.breach.ai
-
-import com.srs.breach.game.board.Point
+package com.srs.breach.game.board
 
 class BitBoard implements Iterable<Point> {
 
@@ -17,24 +15,28 @@ class BitBoard implements Iterable<Point> {
     new BitBoard(bits)
   }
 
-  boolean get(Point point) {
-    get(point.x, point.y)
-  }
-
   boolean get(int x, int y) {
     (bits & mask(x, y)) != 0
   }
 
-  void set(Point point) {
-    set(point.x, point.y)
+  boolean get(Point point) {
+    get(point.x, point.y)
   }
 
   void set(int x, int y) {
     bits |= mask(x, y)
   }
 
+  void set(Point point) {
+    set(point.x, point.y)
+  }
+
   void clear(int x, int y) {
     bits &= ~mask(x, y)
+  }
+
+  void clear(Point point) {
+    clear(point.x, point.y)
   }
 
   void setRow(int y) {

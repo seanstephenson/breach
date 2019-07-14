@@ -330,10 +330,9 @@ class LuaSaveFileParser {
     def mapData = findMapData(region)
 
     def dimensions = parsePoint(mapData.get('dimensions'))
-    def width = dimensions.x
-    def height = dimensions.y
+    assert dimensions == new Point(8, 8)
 
-    def board = new Board(width, height)
+    def board = new Board()
 
     def map = toList(mapData.get('map').checktable())
 
@@ -342,7 +341,7 @@ class LuaSaveFileParser {
       def location = parsePoint(entry.get('loc'))
       def tile = parseTile(entry.checktable())
 
-      board.set(location.x, location.y, tile)
+      board.set(location, tile)
     }
 
     board

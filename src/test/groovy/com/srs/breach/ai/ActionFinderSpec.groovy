@@ -3,6 +3,7 @@ package com.srs.breach.ai
 import com.srs.breach.game.Game
 import com.srs.breach.game.Mission
 import com.srs.breach.game.Weapon
+import com.srs.breach.game.board.BitBoard
 import com.srs.breach.game.board.Board
 import com.srs.breach.game.board.Point
 import com.srs.breach.game.entity.Mech

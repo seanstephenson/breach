@@ -2,6 +2,7 @@ package com.srs.breach.ai
 
 import com.srs.breach.game.Game
 import com.srs.breach.game.Weapon
+import com.srs.breach.game.board.BitBoard
 import com.srs.breach.game.entity.Actor
 
 import static com.srs.breach.game.Weapon.AimType.*

@@ -9,8 +9,14 @@ class SimpleBoardFormatterSpec extends Specification {
 
   def 'Board is formatted correctly'() {
     def text = normalize('''
-      .  Mf .
-      m  M  ^
+      .  Mf .  .  .  .  .  .
+      m  M  ^  .  .  .  .  .
+      .  .  .  .  .  .  .  .
+      .  .  .  .  .  .  .  .
+      .  .  .  .  .  .  .  .
+      .  .  .  .  .  .  .  .
+      .  .  .  .  .  .  .  .
+      .  .  .  .  .  .  .  .
     ''')
 
     def board = parser.parse(text)
