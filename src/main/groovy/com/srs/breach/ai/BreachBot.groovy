@@ -3,6 +3,7 @@ package com.srs.breach.ai
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.github.difflib.DiffUtils
+import com.github.difflib.patch.DeltaType
 import com.srs.breach.game.parser.lua.LuaSaveFileParser
 import com.srs.breach.game.parser.simple.SimpleBreachNotation
 import java.nio.file.FileSystems
@@ -76,7 +77,14 @@ class BreachBot {
       println("Detected [${patch.deltas.size()}] changes:")
 
       patch.deltas.each { delta ->
-        println delta
+        print "$delta.type:"
+        if (delta.type == DeltaType.CHANGE || delta.type == DeltaType.DELETE) {
+          print "  Before [${delta.source.lines.join('\n')}]"
+        }
+        if (delta.type == DeltaType.CHANGE || delta.type == DeltaType.INSERT) {
+          print "  After [${delta.target.lines.join('\n')}]"
+        }
+        println()
       }
     }
 
