@@ -2,11 +2,19 @@ package com.srs.breach.game.entity
 
 import com.srs.breach.game.Weapon
 
-trait Actor implements Entity, Mobile {
+abstract class Actor extends Mobile {
 
-  boolean canAct = true
+  boolean canAct
+  boolean acted
   int order
 
   List<Weapon> weapons = []
+
+  @Override
+  void init() {
+    super.init()
+
+    canAct = !acted
+  }
 
 }

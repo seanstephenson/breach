@@ -25,6 +25,10 @@ class ActionFinder {
       }
     }
 
+    if (actor.canMove || actor.canAct) {
+      actions.add(new Action(actor: actor, type: Action.Type.None, target: actor.location))
+    }
+
     actions
   }
 

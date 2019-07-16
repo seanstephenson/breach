@@ -14,4 +14,9 @@ class Game {
   int reputation
   int cores
 
+  void init() {
+    mission.init()
+    mechs.each { mech -> mech.init() }
+  }
+
 }

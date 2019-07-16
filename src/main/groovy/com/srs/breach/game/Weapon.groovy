@@ -12,6 +12,19 @@ class Weapon {
 
   int extraRange
 
+  void init() {
+    initExtraRange()
+  }
+
+  void initExtraRange() {
+    // todo: implement
+  }
+
+  @Override
+  String toString() {
+    type.name()
+  }
+
   enum Type {
 
     Repair(Self),

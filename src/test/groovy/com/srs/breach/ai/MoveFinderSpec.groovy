@@ -3,7 +3,6 @@ package com.srs.breach.ai
 import com.srs.breach.game.board.BitBoard
 import com.srs.breach.game.board.Board
 import com.srs.breach.game.board.Point
-import com.srs.breach.game.entity.AbstractEntity
 import com.srs.breach.game.entity.Enemy
 import com.srs.breach.game.entity.Mobile
 import com.srs.breach.game.entity.Mountain
@@ -14,7 +13,7 @@ class MoveFinderSpec extends Specification {
 
   def moveFinder = new MoveFinder()
 
-  static class Mover extends AbstractEntity implements Mobile {
+  static class Mover extends Mobile {
 
     Team team = Team.Player
 

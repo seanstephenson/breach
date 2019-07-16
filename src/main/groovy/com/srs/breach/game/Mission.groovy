@@ -13,4 +13,9 @@ class Mission {
   List<Enemy> enemies
   List<Npc> npcs
 
+  void init() {
+    enemies.each { enemy -> enemy.init() }
+    npcs.each { npc -> npc.init() }
+  }
+
 }

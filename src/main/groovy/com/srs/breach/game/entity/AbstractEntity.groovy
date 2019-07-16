@@ -7,8 +7,11 @@ abstract class AbstractEntity implements Entity {
   Point location
   int health, healthMax
 
-  Effect effect
-  List<Ability> abilities
+  List<Effect> effects = []
+  List<Ability> abilities = []
+
+  void init() {
+  }
 
   @Override
   List<Point> getExtraLocations() {
@@ -19,4 +22,5 @@ abstract class AbstractEntity implements Entity {
   String toString() {
     getClass().simpleName + location
   }
+
 }

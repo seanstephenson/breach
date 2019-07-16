@@ -4,6 +4,8 @@ import com.srs.breach.game.board.Point
 
 interface Entity {
 
+  void init()
+
   Point getLocation()
   void setLocation(Point location)
 
@@ -15,7 +17,7 @@ interface Entity {
   int getHealthMax()
   void setHealthMax(int maxHealth)
 
-  Effect getEffect()
+  List<Effect> getEffects()
   List<Ability> getAbilities()
 
   Team getTeam()

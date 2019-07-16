@@ -2,9 +2,10 @@ package com.srs.breach.game.entity
 
 import com.srs.breach.game.board.Point
 
+import static com.srs.breach.game.entity.Entity.*
 import static com.srs.breach.game.entity.Entity.Ability.*
 
-class Enemy extends AbstractEntity implements Actor {
+class Enemy extends Actor {
 
   Type type
   int order
@@ -14,6 +15,11 @@ class Enemy extends AbstractEntity implements Actor {
   @Override
   Team getTeam() {
     Team.Enemy
+  }
+
+  @Override
+  void init() {
+    super.init()
   }
 
   enum Type {

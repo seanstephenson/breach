@@ -1,27 +1,54 @@
 package com.srs.breach.game.parser.simple
 
 import com.srs.breach.ai.Action
+import com.srs.breach.ai.Direction
+import com.srs.breach.game.Weapon
 import com.srs.breach.game.board.Board
-
-import static com.srs.breach.ai.Action.Type.*
-import static com.srs.breach.game.parser.simple.SimpleBreachNotation.*
+import com.srs.breach.game.board.Point
+import com.srs.breach.game.entity.Actor
 
 class SimpleActionFormatter {
 
-  String format(Action action, Board board) {
+  Board board
 
-    def mech = toSymbol(action.mech)
+  SimpleActionFormatter(Board board) {
+    this.board = board
+  }
+
+  String format(Action action) {
+
+    def actor = action.actor
+    def weapon = action.weapon
     def target = action.target
 
-    def targetEntity = toSymbol(board.get(target).entity)
-
     switch (action.type) {
-      case Move: return "$mech -> $target (move)"
-      case Repair: return "$mech++ ${target != action.mech.location ? target : ''} (repair)"
-      case PrimaryWeapon: return "$mech >1> $target $targetEntity (primary)"
-      case SecondaryWeapon: return "$mech >2> $target $targetEntity (secondary)"
+      case Action.Type.None: return formatNoneAction(actor)
+      case Action.Type.Move: return formatMoveAction(actor, target)
+      case Action.Type.Weapon: return formatWeaponAction(actor, weapon, target)
 
       default: throw new IllegalArgumentException("Unknown action type [$action.type]")
+    }
+  }
+
+  private String formatNoneAction(Actor actor) {
+    "$actor: none"
+  }
+
+  private String formatMoveAction(Actor actor, Point target) {
+    "$actor: move to -> $target"
+  }
+
+  private String formatWeaponAction(Actor actor, Weapon weapon, Point target) {
+
+    def targetEntity = board?.get(target)?.entity
+    def direction = Direction.from(actor.location, target)
+
+    if (weapon.type == Weapon.Type.Repair) {
+      "$actor: repair"
+    } else if (weapon.type.aimType == Weapon.AimType.Self) {
+      "$actor: weapon $weapon"
+    } else {
+      "$actor: weapon $weapon -> fire ${direction ?: ''} to $target${targetEntity ? ", $targetEntity" : ''}"
     }
   }
 

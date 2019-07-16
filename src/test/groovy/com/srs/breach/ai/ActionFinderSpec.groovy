@@ -23,6 +23,8 @@ class ActionFinderSpec extends Specification {
   def 'Find actions'() {
     def mech = new Mech(
       location: new Point(3, 3),
+      canMove: true,
+      canAct: true,
       moveSpeed: 2,
       weapons: [
         new Weapon(type: Weapon.Type.Repair),

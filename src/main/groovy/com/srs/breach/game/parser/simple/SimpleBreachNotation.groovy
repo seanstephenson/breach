@@ -62,7 +62,11 @@ class SimpleBreachNotation {
   }
 
   static String format(Action action) {
-    new SimpleActionFormatter().format(action)
+    format(action, null)
+  }
+
+  static String format(Action action, Board board) {
+    new SimpleActionFormatter(board).format(action)
   }
 
   static String spawnPointSymbol() {

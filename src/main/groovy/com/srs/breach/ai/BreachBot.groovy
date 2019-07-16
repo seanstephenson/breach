@@ -12,6 +12,12 @@ import java.nio.file.Path
 import java.nio.file.Paths
 import java.nio.file.StandardWatchEventKinds
 import java.nio.file.WatchEvent
+import java.time.Duration
+import java.util.concurrent.Callable
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.TimeoutException
 
 class BreachBot {
 
@@ -21,6 +27,8 @@ class BreachBot {
 
   boolean printDiff = true
   private String previousText
+
+  private ExecutorService executor = Executors.newCachedThreadPool()
 
   void run() {
 
@@ -46,16 +54,41 @@ class BreachBot {
 
     // Parse the save file and find the best moves.
     def game = parser.parse(text)
+    def board = game.mission.board
 
     println()
-    println SimpleBreachNotation.format(game.mission.board)
+    println SimpleBreachNotation.format(board)
+    println()
 
-    def actions = player.getTurnActions(game)
+    def turn = callWithProgress(
+      {
+        player.selectTurn(game)
+      } as Callable<Turn>,
+      {
+        def context = player.searchContext
+        println "... ${(context.percentComplete * 100).toInteger() / 100}% (${context.elapsed.toInteger()}s) ${context.actionsEvaluated} actions, ${context.actionsPerSecond.toInteger()} per second"
+      },
+      Duration.ofSeconds(5)
+    )
 
     println()
     println('Actions:')
-    actions.each { action ->
-      println SimpleBreachNotation.format(action)
+    turn.actions.each { action ->
+      println SimpleBreachNotation.format(action, board)
+    }
+  }
+
+  private <T> T callWithProgress(Callable<T> callable, Closure progress, Duration progressInterval) {
+    def future = executor.submit(callable)
+
+    while (true) {
+      try {
+        return future.get(progressInterval.toMillis(), TimeUnit.MILLISECONDS)
+
+      } catch (TimeoutException ignored) {
+        // There was no result yet, so call the progress handler then loop and try again
+        progress()
+      }
     }
   }
 
@@ -104,7 +137,7 @@ class BreachBot {
     saveFile
   }
 
-  void watchFile(Path file, Closure onChange) {
+  private void watchFile(Path file, Closure onChange) {
 
     FileSystems.getDefault().newWatchService().withCloseable { watcher ->
       def parent = file.parent

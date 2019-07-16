@@ -26,7 +26,11 @@ class LuaSaveFileParser {
   Game parse(String text) {
 
     def globals = execute(text)
-    parseGame(globals)
+    def game = parseGame(globals)
+
+    game.init()
+
+    game
   }
 
   Map<String, Object> toMap(String text) {
@@ -39,6 +43,7 @@ class LuaSaveFileParser {
   }
 
   private Globals execute(String text) {
+
     def globals = createGlobals()
 
     def chunk = globals.load(text)
@@ -48,6 +53,7 @@ class LuaSaveFileParser {
   }
 
   private Globals createGlobals() {
+
     def globals = JsePlatform.standardGlobals()
 
     def script = LuaSaveFileParser.getResourceAsStream('/lua/saveFileParser.lua').text
